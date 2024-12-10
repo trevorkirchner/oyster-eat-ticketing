@@ -1,0 +1,26 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-georgetownoystereatt-staging-82f22-authRole",
+      "UnauthRoleArn": "arn:aws:iam::354222605740:role/amplify-georgetownoystereatt-staging-82f22-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::354222605740:role/amplify-georgetownoystereatt-staging-82f22-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-georgetownoystereatt-staging-82f22-deployment",
+      "UnauthRoleName": "amplify-georgetownoystereatt-staging-82f22-unauthRole",
+      "StackName": "amplify-georgetownoystereatt-staging-82f22",
+      "StackId": "arn:aws:cloudformation:us-east-1:354222605740:stack/amplify-georgetownoystereatt-staging-82f22/d623ad00-b700-11ef-921f-122e2f1fb2c5",
+      "AmplifyAppId": "dhxu2ttin7e4i"
+    },
+    "categories": {
+      "api": {
+        "GeorgetownOysterEatTicketer": {}
+      },
+      "function": {
+        "SendEmailFunction": {
+          "deploymentBucketName": "amplify-georgetownoystereatt-staging-82f22-deployment",
+          "s3Key": "amplify-builds/SendEmailFunction-453951636c5066357661-build.zip"
+        }
+      }
+    }
+  }
+}
