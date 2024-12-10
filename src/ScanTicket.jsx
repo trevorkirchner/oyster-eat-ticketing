@@ -68,14 +68,14 @@ const ScanTicket = () => {
     return (
       <div style={{ textAlign: "center", padding: "20px" }}>
         <h1>Scan Ticket</h1>
-        {/* <QrReader
+        <QrReader
           delay={100}
           style={previewStyle}
           onError={handleError}
           onScan={handleScan}
           legacyMode={true}
           facingMode="rear" // Use the rear camera if available
-        /> */}
+        />
         <p>{scanResult && `QR Code: ${scanResult}`}</p>
         <p>{status}</p>
       </div>
