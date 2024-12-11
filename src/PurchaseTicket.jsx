@@ -6,6 +6,7 @@ import { createTickets } from "./graphql/mutations";
 import { listEventIds } from "./graphql/queries";
 import { sendEmail } from "./emailService";
 import { useNavigate } from "react-router-dom";
+import * as base64js from "base64-js";
 
 const client = generateClient();
 
@@ -75,7 +76,7 @@ const PurchaseTicket = () => {
     try {
       for (let i = 0; i < numberOfTickets; i++) {
         const ticketId = `TICKET-${Math.random().toString(36).substr(2, 9)}`;
-        const qrData = await QRCode.toDataURL(ticketId);
+        const qrData = await QRCode.toDataURL(ticketId); // Generate QR code as Base64
   
         const newTicket = {
           EventId: eventId,
@@ -101,25 +102,20 @@ const PurchaseTicket = () => {
         });
       }
   
-      const subject = "Your Ticket Purchase Receipt";
-      const body = `
-        <h1>Thank you for your purchase!</h1>
-        <p>Dear ${firstName} ${lastName},</p>
-        <p>Here are your tickets:</p>
-        ${tickets
-          .map(
-            (ticket) => `
-          <div>
-            <p>Ticket ID: ${ticket.ticketId}</p>
-            <img src="${ticket.qrData}" alt="QR Code" />
-          </div>
-        `
-          )
-          .join("")}
-        <p>We look forward to seeing you at the event!</p>
-      `;
-  
-      await sendEmail(email, subject, body);
+      const payload = {
+        toAddress: email,
+        subject: "Your Ticket Purchase Receipt",
+        body: `
+          <h1>Thank you for your purchase!</h1>
+          <p>Dear ${firstName} ${lastName},</p>
+          <p>Attached are your tickets as QR code images. Please present these at the event.</p>
+        `,
+        tickets: tickets.map((ticket) => ({
+          ticketId: ticket.ticketId,
+        })),
+      };
+      await sendEmail(payload);
+      
   
       alert("Tickets purchased successfully! A receipt has been sent to your email.");
       setFormData({
