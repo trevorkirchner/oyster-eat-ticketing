@@ -1,15 +1,15 @@
 import React, { useRef, useState } from "react";
-import { QrReader } from "react-qr-scanner";
+import { Scanner } from '@yudiel/react-qr-scanner';
 import { generateClient } from "aws-amplify/api";
 import { updateTickets } from "./graphql/mutations";
 import { listTickets } from "./graphql/queries";
 
 const client = generateClient();
 
+
 const ScanTicket = () => {
-  const [scanResult, setScanResult] = useState("No result");
+  const [scanResult, setScanResult] = useState("");
   const [status, setStatus] = useState("");
-  const qrReaderRef = useRef(null); // Ref for the QR Reader component
 
   const handleScan = async (data) => {
     if (data) {
@@ -56,38 +56,47 @@ const ScanTicket = () => {
     }
   };
 
-  const handleError = (err) => {
-    console.error("QR Reader Error:", err);
-    setStatus("Error reading QR code.");
-  };
-
-  const openImageDialog = () => {
-    if (qrReaderRef.current) {
-      qrReaderRef.current.openImageDialog();
-    }
-  };
-
-  const previewStyle = {
-    height: 240,
-    width: 320,
-  };
-
   return (
-    <div style={{ textAlign: "center", padding: "20px" }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh", // Full screen height
+        textAlign: "center",
+      }}
+    >
       <h1>Scan Ticket</h1>
-      <QrReader
-        ref={qrReaderRef}
-        delay={100}
-        style={previewStyle}
-        onError={handleError}
-        onScan={handleScan}
-        legacyMode={true} // Enable legacyMode for image dialog
-      />
-      <button onClick={openImageDialog}>Upload QR Code</button>
+      <div
+        style={{
+          width: "400px",
+          height: "400px",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          border: "2px solid #ccc", // Optional: Border around the scanner
+          borderRadius: "8px", // Optional: Rounded corners
+        }}
+      >
+        <Scanner
+          onScan={handleScan}
+          onError={(error) => {
+            console.error("Scanner Error:", error);
+            setStatus("Error reading QR code.");
+          }}
+          constraints={{ facingMode: "environment" }} // Use the rear camera
+          style={{
+            width: "100%",
+            height: "100%",
+          }}
+        />
+      </div>
       <p>{scanResult && `QR Code: ${scanResult}`}</p>
       <p>{status}</p>
     </div>
   );
+  
 };
 
 export default ScanTicket;
