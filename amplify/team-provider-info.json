@@ -18,7 +18,7 @@
       "function": {
         "SendEmailFunction": {
           "deploymentBucketName": "amplify-georgetownoystereatt-staging-82f22-deployment",
-          "s3Key": "amplify-builds/SendEmailFunction-734d59726e457869314c-build.zip"
+          "s3Key": "amplify-builds/SendEmailFunction-4e4d38543237346c2f74-build.zip"
         }
       }
     }
